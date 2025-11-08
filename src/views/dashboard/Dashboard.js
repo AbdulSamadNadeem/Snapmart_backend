@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import classNames from 'classnames'
 
 import {
@@ -18,6 +18,9 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CToast,
+  CToastBody,
+  CToastHeader,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import {
@@ -57,9 +60,18 @@ import Cookies from 'js-cookie'
 import { useNavigate } from 'react-router-dom'
 import instance from '../../APi/Instance'
 import { jwtDecode } from 'jwt-decode'
+import socket from '../../Socket/socket'
+import { ToastContext } from '../../App'
+import { allorders, allusers } from '../../APi/Routehandlers'
+import { fetchallorders } from '../../store/features/orders/orderSlice'
+import { useDispatch } from 'react-redux'
+import { fetchallproducts } from '../../store/features/products/productSlice'
+import { fetchallusers } from '../../store/features/user/userSlice'
 const Dashboard = () => {
   const navigate = useNavigate()
-
+  const settoast = useContext(ToastContext)
+  const dispatch = useDispatch()
+  const TrafficRef = useRef(null)
   const check_expiry = (token) => {
     try {
       const { exp } = jwtDecode(token)
@@ -99,6 +111,7 @@ const Dashboard = () => {
     }
   }
 
+
   const progressExample = [
     { title: 'Visits', value: '29.703 Users', percent: 40, color: 'success' },
     { title: 'Unique', value: '24.093 Users', percent: 20, color: 'info' },
@@ -131,6 +144,25 @@ const Dashboard = () => {
   useEffect(() => {
     RefreshToken()
   }, [])
+  useEffect(() => {
+    socket.on('connect', () => {
+      console.log('connection established')
+    })
+    socket.on('new-order', (data) => {
+      console.log('New order received:', data)
+      settoast(
+        <CToast autohide color="success" className="text-white">
+          <CToastHeader closeButton>New Order Is Placed</CToastHeader>
+          <CToastBody>Order id {data.id}</CToastBody>
+        </CToast>,
+      )
+    })
+
+    return () => {
+      socket.off('new-order')
+      socket.off('connect')
+    }
+  })
   const tableExample = [
     {
       avatar: { src: avatar1, status: 'success' },
@@ -225,7 +257,7 @@ const Dashboard = () => {
   return (
     <>
       <WidgetsDropdown className="mb-4" />
-      <CCard className="mb-4">
+      <CCard ref={TrafficRef} className="mb-4">
         <CCardBody>
           <CRow>
             <CCol sm={5}>

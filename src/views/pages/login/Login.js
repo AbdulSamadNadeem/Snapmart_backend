@@ -51,8 +51,8 @@ const Login = () => {
 
       settoast(
         <CToast autohide color="success" className="text-white">
-          <CToastHeader closeButton>Success</CToastHeader>
-          <CToastBody>Login successful!</CToastBody>
+          <CToastHeader closeButton>Login successful</CToastHeader>
+          <CToastBody>Welcome Admin</CToastBody>
         </CToast>,
       )
       navigate('/dashboard')

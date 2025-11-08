@@ -15,31 +15,17 @@ import { CChartBar, CChartLine } from '@coreui/react-chartjs'
 import CIcon from '@coreui/icons-react'
 import { cilArrowBottom, cilArrowTop, cilOptions } from '@coreui/icons'
 import { allorders, allproducts, allusers } from '../../APi/Routehandlers'
+import { useSelector } from 'react-redux'
 
 const WidgetsDropdown = (props) => {
-  const [users, setusers] = useState([])
-  const [orders, setorders] = useState([])
-  const [products, setproducts] = useState([])
-  const [totalAmount, setTotalAmount] = useState(0)
+  const orders = useSelector((state) => state.order.allOrders)
+  const products = useSelector((state) => state.product.allProducts)
+  const users = useSelector((state) => state.user.allUsers)
+  console.log(users)
+  const total = orders?.reduce((sum, item) => sum + Number(item.total_amount), 0)
   const widgetChartRef1 = useRef(null)
   const widgetChartRef2 = useRef(null)
-  const getData = async () => {
-    try {
-      const [allusersdata, ordersdata, productsdata] = await Promise.all([
-        allusers('/users/getallusers'),
-        allorders('/orders/getall'),
-        allproducts('/products/getall'),
-      ])
-
-      setusers(allusersdata.data.users)
-      setorders(ordersdata.data.orders)
-      setproducts(productsdata.data.products)
-      const total = ordersdata.data.orders.reduce((sum, item) => sum + Number(item.total_amount), 0)
-      setTotalAmount(total)
-    } catch (err) {
-      console.log(err)
-    }
-  }
+ 
   useEffect(() => {
     document.documentElement.addEventListener('ColorSchemeChange', () => {
       if (widgetChartRef1.current) {
@@ -58,10 +44,7 @@ const WidgetsDropdown = (props) => {
     })
   }, [widgetChartRef1, widgetChartRef2])
 
-  useEffect(() => {
-    getData()
-    console.log(orders)
-  }, [])
+ 
 
   return (
     <CRow className={props.className} xs={{ gutter: 4 }}>
@@ -153,7 +136,7 @@ const WidgetsDropdown = (props) => {
           color="info"
           value={
             <>
-              ${totalAmount.toFixed(2)}{' '}
+              ${total.toFixed(2)}{' '}
               {/* <span className="fs-6 fw-normal">
                 (40.9% <CIcon icon={cilArrowTop} />)
               </span> */}

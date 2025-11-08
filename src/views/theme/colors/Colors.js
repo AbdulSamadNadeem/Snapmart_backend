@@ -195,6 +195,43 @@ const Colors = () => {
         </CContainer>
         <CCardBody></CCardBody>
       </CCard>
+      <CCard className="mb-4">
+        <CCardHeader>Add Products to Sale on Here</CCardHeader>
+        <CContainer className="justify-content-center">
+          <CRow className="justify-content-center">
+            <CCol md={8}>
+              <CCardGroup>
+                <CCardBody>
+                  <CForm onSubmit={handle_submit}>
+                    <h1 className="text-center">Add Product To Sale</h1>
+                    <p className="text-body-secondary text-center">
+                      Enter all the details carefully
+                    </p>
+                    {error && <CAlert color="danger">{error}</CAlert>}
+                    <CInputGroup className="mb-4">
+                      <CInputGroupText>Id</CInputGroupText>
+                      <CFormInput
+                        type="text"
+                        placeholder="Enter The Product Id"
+                        value={rating}
+                        onChange={(e) => setRating(e.target.value)}
+                      />
+                    </CInputGroup>
+                    <CRow>
+                      <CCol className="text-center">
+                        <CButton type="submit" color="primary" className="px-4 w-75">
+                          Add
+                        </CButton>
+                      </CCol>
+                    </CRow>
+                  </CForm>
+                </CCardBody>
+              </CCardGroup>
+            </CCol>
+          </CRow>
+        </CContainer>
+        <CCardBody></CCardBody>
+      </CCard>
     </>
   )
 }

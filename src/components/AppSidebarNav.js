@@ -6,8 +6,11 @@ import SimpleBar from 'simplebar-react'
 import 'simplebar-react/dist/simplebar.min.css'
 
 import { CBadge, CNavLink, CSidebarNav } from '@coreui/react'
+import { useSelector } from 'react-redux'
+import { color } from 'chart.js/helpers'
 
 export const AppSidebarNav = ({ items }) => {
+  const state = useSelector((state) => state.theme.newOrders)
   const navLink = (name, icon, badge, indent = false) => {
     return (
       <>
@@ -18,7 +21,7 @@ export const AppSidebarNav = ({ items }) => {
                 <span className="nav-icon-bullet"></span>
               </span>
             )}
-        {name && name}
+        {name && <span style={{ color: name === 'Orders' && state ? '#c0392b' : '' }}>{name}</span>}
         {badge && (
           <CBadge color={badge.color} className="ms-auto" size="sm">
             {badge.text}

@@ -1,12 +1,16 @@
 import React, { Suspense, useEffect, useState } from 'react'
-import { HashRouter, Route, Routes ,useNavigate} from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { HashRouter, Route, Routes, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { CSpinner, CToaster, useColorModes } from '@coreui/react'
 import './scss/style.scss'
 
 // We use those styles to show code examples, you should remove them in your application.
 import './scss/examples.scss'
+import { allorders, allusers } from './APi/Routehandlers'
+import { fetchallorders } from './store/features/orders/orderSlice'
+import { fetchallproducts } from './store/features/products/productSlice'
+import { fetchallusers } from './store/features/user/userSlice'
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
@@ -20,6 +24,7 @@ export const ToastContext = React.createContext()
 const App = () => {
   const { isColorModeSet, setColorMode } = useColorModes('coreui-free-react-admin-template-theme')
   const storedTheme = useSelector((state) => state.theme)
+  const dispatch = useDispatch()
   const [toast, settoast] = useState(0)
 
   useEffect(() => {
@@ -34,6 +39,38 @@ const App = () => {
     }
 
     setColorMode(storedTheme)
+  }, [])
+
+  const fetchOrders = async () => {
+    try {
+      const data = await allorders('/orders/getall')
+      console.log(data)
+      dispatch(fetchallorders(data.data.orders))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  const fetchproducts = async () => {
+    try {
+      const data = await allorders('/products/getall')
+      dispatch(fetchallproducts(data.data.products))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  const fetchusers = async () => {
+    try {
+      const data = await allusers('/users/getallusers')
+      dispatch(fetchallusers(data.data.users))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  useEffect(() => {
+    
+    fetchOrders()
+    fetchproducts()
+    fetchusers()
   }, [])
 
   return (

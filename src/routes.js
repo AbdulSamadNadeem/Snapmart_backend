@@ -1,3 +1,4 @@
+import { element } from 'prop-types'
 import React from 'react'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
@@ -5,7 +6,28 @@ const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
 const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
 const Order = React.lazy(() => import('./views/theme/orders/Order'))
+const Order_items = React.lazy(() => import('./views/theme/orders/Products_In_orders'))
+const ConfirmOrder = React.lazy(() => import('./views/theme/orders/ConfirmOrder.js'))
+const Category = React.lazy(() => import('./views/theme/category/Category.jsx'))
+const SubCategory = React.lazy(() => import('./views/theme/category/Subcategory.jsx'))
+//insights
 
+const Approved_Orders = React.lazy(
+  () => import('./views/Store_Insights/Orders_insights/Approved.js'),
+)
+const Delivered_Orders = React.lazy(
+  () => import('./views/Store_Insights/Orders_insights/Delivered.js'),
+)
+const Canceled_Orders = React.lazy(
+  () => import('./views/Store_Insights/Orders_insights/Canceled.js'),
+)
+
+const All_products = React.lazy(
+  () => import('./views/Store_Insights/Prodcucts_insights/Allproducts.js'),
+)
+const Sale_products = React.lazy(
+  () => import('./views/Store_Insights/Prodcucts_insights/OnsaleProducts.js'),
+)
 // Base
 const Accordion = React.lazy(() => import('./views/base/accordion/Accordion'))
 const Breadcrumbs = React.lazy(() => import('./views/base/breadcrumbs/Breadcrumbs'))
@@ -56,11 +78,17 @@ const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
-  { path: '/management/orders', name: 'Theme', element: Order, exact: true },
-  { path: '/management/products', name: 'Colors', element: Colors },
-  { path: '/management/category', name: 'Typography', element: Typography },
-  { path: '/management/sub_category', name: 'Typography', element: Typography },
-  { path: '/base', name: 'Base', element: Cards, exact: true },
+  { path: '/management/orders', name: 'Management', element: Order, exact: true },
+  { path: '/management/orders_orderitems', name: 'Management', element: Order_items, exact: true },
+  { path: '/management/confirm_orders', name: 'Management', element: ConfirmOrder, exact: true },
+  { path: '/management/products', name: 'Management', element: Colors },
+  { path: '/management/category', name: 'Management', element: Category },
+  { path: '/management/sub_category', name: 'Management', element: SubCategory },
+  { path: '/insights/apprvedorders', name: 'Insights', element: Approved_Orders },
+  { path: '/insights/deliveredorders', name: 'Insights', element: Delivered_Orders },
+  { path: '/insights/canceledoreders', name: 'Insights', element: Canceled_Orders },
+  { path: '/insights/allproducts', name: 'Insights', element: All_products },
+  { path: '/insights/onsaleprod', name: 'Insights', element: Sale_products },
   { path: '/base/accordion', name: 'Accordion', element: Accordion },
   { path: '/base/breadcrumbs', name: 'Breadcrumbs', element: Breadcrumbs },
   { path: '/base/cards', name: 'Cards', element: Cards },

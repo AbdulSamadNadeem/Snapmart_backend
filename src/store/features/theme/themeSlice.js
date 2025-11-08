@@ -4,6 +4,7 @@ const initialState = {
   sidebarShow: true,
   theme: 'light',
   sidebarUnfoldable: false,
+  newOrders: false,
 }
 
 export const themeSlice = createSlice({
@@ -18,9 +19,17 @@ export const themeSlice = createSlice({
           return state
       }
     },
+    isNeworders: (state, { payload }) => {
+      console.log("payload",payload)
+      if (payload) {
+        state.newOrders = true
+      } else {
+        state.newOrders = false
+      }
+    },
   },
 })
 
-export const { changeState } = themeSlice.actions
+export const { changeState ,isNeworders} = themeSlice.actions
 
 export default themeSlice.reducer

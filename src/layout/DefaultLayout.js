@@ -1,7 +1,10 @@
 import React from 'react'
 import { AppContent, AppSidebar, AppFooter, AppHeader } from '../components/index'
+import { useSelector } from 'react-redux'
 
 const DefaultLayout = () => {
+  const state = useSelector((state) => state.theme)
+  console.log(state)
   return (
     <div>
       <AppSidebar />

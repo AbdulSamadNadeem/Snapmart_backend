@@ -30,7 +30,7 @@ import { AppHeaderDropdown } from './header/index'
 import { changeState } from '../store/features/theme/themeSlice'
 import { sideBarShow } from '../store/features/sidebar/sidebarSlice'
 
-const AppHeader = () => {
+const AppHeader = ({Scrollto}) => {
   const headerRef = useRef()
   const { colorMode, setColorMode } = useColorModes('coreui-free-react-admin-template-theme')
 

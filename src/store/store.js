@@ -20,6 +20,15 @@
 import { configureStore } from '@reduxjs/toolkit'
 import themereducer from './features/theme/themeSlice'
 import sidebarReducer from './features/sidebar/sidebarSlice'
+import orderReducer from './features/orders/orderSlice'
+import productReducer from './features/products/productSlice'
+import userReducer from './features/user/userSlice'
 export const store = configureStore({
-  reducer: { theme: themereducer, sidebar: sidebarReducer },
+  reducer: {
+    theme: themereducer,
+    sidebar: sidebarReducer,
+    order: orderReducer,
+    product: productReducer,
+    user: userReducer,
+  },
 })

@@ -49,3 +49,35 @@ export const add_products = async (route, data) => {
     throw err
   }
 }
+export const add_category = async (route, data) => {
+  try {
+    const response = await instance.post(route, data)
+    return response
+  } catch (err) {
+    throw err
+  }
+}
+export const add_Subcategory = async (route, data) => {
+  try {
+    const response = await instance.post(route, data)
+    return response
+  } catch (err) {
+    throw err
+  }
+}
+export const getOrderbyId = async (route) => {
+  try {
+    const response = await instance.get(route)
+    return response
+  } catch (err) {
+    throw err
+  }
+}
+export const updateOrder = async (route, data) => {
+  try {
+    const response = await instance.patch(route, data)
+    return response
+  } catch (err) {
+    throw err
+  }
+}
